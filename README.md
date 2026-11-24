@@ -34,17 +34,6 @@ curl.exe -i -X POST http://localhost:8080/ -H "Content-Type: application/x-www-f
 curl.exe -s -D - -o NUL -H "Accept-Encoding: gzip" http://localhost:8080/
 ```
 
-## Cómo cumple la consigna
-
-- Atiende conexiones concurrentes mediante operaciones de socket asíncronas; no fija un máximo artificial.
-- Sirve `index.html` para `/` y para directorios.
-- Lee el puerto y las carpetas desde `config.json`.
-- Devuelve `404` con la página `www/404.html` cuando no encuentra un archivo.
-- Acepta GET y POST. El POST no procesa los datos: se registran en el log.
-- Los parámetros de query se conservan para el log, no se usan para generar la respuesta.
-- Comprime con GZIP los archivos de texto que el cliente acepta, si superan el umbral configurado y la compresión reduce su tamaño.
-- Registra fecha, IP, método, ruta, query y resultado en un archivo diario. El acceso concurrente al log se protege con `lock`.
-
 ## Límites y decisiones adicionales
 
 - Se procesa una solicitud por conexión y luego se envía `Connection: close`.
